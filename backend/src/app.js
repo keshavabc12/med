@@ -78,6 +78,14 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Serve frontend static files in production
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+// Catch-all route to serve the React frontend for unmatched routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+});
+
 // Central error handler (four-arg signature required by Express)
 app.use((err, _req, res, _next) => {
   console.error(err);
