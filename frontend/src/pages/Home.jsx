@@ -67,7 +67,7 @@ export default function Home() {
 
       <section id="categories" className="scroll-mt-28">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="font-display text-3xl font-bold text-brand-950">Shop by category</h2>
+          <h2 className="font-display text-3xl font-bold text-brand-950">Our Products</h2>
           <a href="#featured" className="text-sm font-semibold text-brand-700 hover:underline">
             Jump to featured ↓
           </a>
