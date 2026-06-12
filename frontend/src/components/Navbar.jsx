@@ -16,14 +16,14 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-teal-900/10 bg-white/85 shadow-sm shadow-teal-900/5 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:gap-4">
-        <Link to="/" className="group flex min-w-0 items-center gap-2.5 sm:gap-3">
-          <span className="flex h-12 w-auto shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 overflow-hidden shadow-sm transition group-hover:border-brand-400 bg-white">
+        <Link to="/" className="group flex min-w-0 items-center gap-2 sm:gap-3">
+          <span className="flex h-10 sm:h-12 w-auto shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 overflow-hidden shadow-sm transition group-hover:border-brand-400 bg-white">
             {/* Make sure to save your image as 'logo-full.jpeg' inside frontend/public */}
             <img src="/logo.jpg" alt={COMPANY_NAME} className="h-full w-auto object-contain bg-white" />
           </span>
-          <div className="flex flex-col">
-            <span className="font-display text-[1.05rem] font-bold text-brand-900 leading-none">{COMPANY_NAME}</span>
-            <span className="text-[10px] font-bold tracking-widest text-teal-600/80 uppercase mt-0.5">Wellness & Care</span>
+          <div className="flex flex-col min-w-0">
+            <span className="font-display text-sm sm:text-[1.05rem] font-bold text-brand-900 leading-none truncate">{COMPANY_NAME}</span>
+            <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-teal-600/80 uppercase mt-0.5 truncate">Wellness & Care</span>
           </div>
         </Link>
 
