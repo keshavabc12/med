@@ -20,8 +20,16 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="flex min-h-screen">
         <aside className="hidden w-56 shrink-0 border-r border-slate-800 bg-slate-900 p-4 md:block">
-          <p className="font-display text-lg font-bold text-white">{COMPANY_NAME}</p>
-          <p className="text-[10px] font-medium uppercase tracking-widest text-teal-400/90">Staff console</p>
+          <div className="flex items-center gap-2.5 mb-4">
+            <span className="flex h-10 w-auto shrink-0 items-center justify-center rounded-lg border border-slate-700 overflow-hidden bg-white">
+              <img src="/logo.jpg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
+            </span>
+            <div className="flex flex-col">
+              <span className="font-display text-sm font-bold text-white leading-none">{COMPANY_NAME}</span>
+              <span className="text-[9px] font-bold tracking-widest text-teal-400/90 uppercase mt-0.5">Wellness & Care</span>
+            </div>
+          </div>
+          <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500">Staff console</p>
           <p className="mt-1 truncate text-xs text-slate-400">{admin?.email}</p>
           <nav className="mt-6 space-y-1">
             <NavLink to="/admin/dashboard" className={navCls}>
@@ -45,7 +53,15 @@ export default function AdminLayout() {
 
         <div className="flex-1">
           <header className="flex items-center justify-between border-b border-slate-800 bg-slate-900 px-4 py-3 md:hidden">
-            <span className="font-display text-sm font-bold text-white">CP</span>
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-auto shrink-0 items-center justify-center rounded border border-slate-700 overflow-hidden bg-white">
+                <img src="/logo.jpg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
+              </span>
+              <div className="flex flex-col">
+                <span className="font-display text-sm font-bold text-white leading-none">{COMPANY_NAME}</span>
+                <span className="text-[8px] font-bold tracking-widest text-teal-400/90 uppercase mt-0.5">Wellness & Care</span>
+              </div>
+            </div>
             <button type="button" onClick={handleLogout} className="text-sm text-brand-300">
               Log out
             </button>
