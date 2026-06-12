@@ -14,7 +14,7 @@ const productBodyRules = [
   body('price').optional().isFloat({ min: 0 }),
   body('category')
     .optional()
-    .isIn(['medicine', 'healthcare', 'vitamins', 'personal-care', 'devices']),
+    .isIn(['cough-syrups', 'antibiotics', 'gi-care', 'vitamins-minerals', 'joints-mobility']),
   body('stock').optional().isInt({ min: 0 }),
   body('costPrice').optional().isFloat({ min: 0 }),
   body('sku').optional().isString(),

@@ -19,7 +19,7 @@ export default function Navbar() {
         <Link to="/" className="group flex min-w-0 items-center gap-2 sm:gap-3">
           <span className="flex h-10 sm:h-12 w-auto shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 overflow-hidden shadow-sm transition group-hover:border-brand-400 bg-white">
             {/* Make sure to save your image as 'logo-full.jpeg' inside frontend/public */}
-            <img src="/logo.jpg" alt={COMPANY_NAME} className="h-full w-auto object-contain bg-white" />
+            <img src="/logo.jpeg" alt={COMPANY_NAME} className="h-full w-auto object-contain bg-white" />
           </span>
           <div className="flex flex-col min-w-0">
             <span className="font-display text-sm sm:text-[1.05rem] font-bold text-brand-900 leading-none truncate">{COMPANY_NAME}</span>

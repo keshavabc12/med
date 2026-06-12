@@ -6,9 +6,11 @@ import { formatINR } from '../utils/formatPrice';
 import { COMPANY_NAME, COMPANY_TAGLINE } from '../constants/branding';
 
 const CATEGORIES = [
-  { id: 'medicine', label: 'Medicines', desc: 'OTC & prescription support items' },
-  { id: 'vitamins', label: 'Vitamins', desc: 'Daily nutrition & immunity' },
-  { id: 'healthcare', label: 'Healthcare', desc: 'Monitoring & wellness' },
+  { id: 'cough-syrups', label: 'Cough syrups', desc: 'Relief for dry and wet coughs' },
+  { id: 'antibiotics', label: 'Antibiotics', desc: 'Prescription bacterial treatments' },
+  { id: 'gi-care', label: 'GI Care', desc: 'Digestion and gut health support' },
+  { id: 'vitamins-minerals', label: 'Vitamins and Minerals', desc: 'Daily nutrition and immunity' },
+  { id: 'joints-mobility', label: 'Joints and Mobility', desc: 'Bone health and pain relief' },
 ];
 
 export default function Home() {
@@ -63,20 +65,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust strip — adds vertical rhythm for scrolling */}
-      <section className="grid gap-4 rounded-2xl border border-brand-200/60 bg-white/80 p-6 shadow-sm backdrop-blur sm:grid-cols-3 sm:p-8">
-        {[
-          { t: 'Verified catalogue', d: 'Clear categories & stock visibility' },
-          { t: 'Secure accounts', d: 'JWT login for customers & staff' },
-          { t: 'Order tracking', d: 'History & fulfilment at a glance' },
-        ].map((x) => (
-          <div key={x.t} className="text-center sm:text-left">
-            <p className="font-semibold text-brand-900">{x.t}</p>
-            <p className="mt-1 text-sm text-slate-600">{x.d}</p>
-          </div>
-        ))}
-      </section>
-
       <section id="categories" className="scroll-mt-28">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <h2 className="font-display text-3xl font-bold text-brand-950">Shop by category</h2>
@@ -123,7 +111,9 @@ export default function Home() {
               to={`/products/${p._id}`}
               className="flex gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-md transition hover:border-brand-300 hover:shadow-lg"
             >
-              <img src={mediaUrl(p.image)} alt="" className="max-w-full max-h-[150px] object-contain mx-auto" />
+              <div className="w-24 h-24 shrink-0 sm:w-28 sm:h-28 flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                <img src={mediaUrl(p.image)} alt="" className="max-w-full max-h-full object-contain mx-auto mix-blend-multiply" />
+              </div>
               <div className="min-w-0 flex-1 flex flex-col">
                 <p className="line-clamp-2 font-semibold text-slate-900">{p.name}</p>
                 <p className="mt-1 text-xs font-medium uppercase tracking-wide text-brand-600/80">

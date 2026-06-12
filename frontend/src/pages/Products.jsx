@@ -6,11 +6,11 @@ import { formatINR } from '../utils/formatPrice';
 
 const CATS = [
   { value: 'all', label: 'All' },
-  { value: 'medicine', label: 'Medicines' },
-  { value: 'healthcare', label: 'Healthcare' },
-  { value: 'vitamins', label: 'Vitamins' },
-  { value: 'personal-care', label: 'Personal care' },
-  { value: 'devices', label: 'Devices' },
+  { value: 'cough-syrups', label: 'Cough syrups' },
+  { value: 'antibiotics', label: 'Antibiotics' },
+  { value: 'gi-care', label: 'GI Care' },
+  { value: 'vitamins-minerals', label: 'Vitamins and Minerals' },
+  { value: 'joints-mobility', label: 'Joints and Mobility' },
 ];
 
 export default function Products() {

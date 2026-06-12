@@ -4,14 +4,14 @@ import api from '../../services/api';
 import { useCatalog } from '../../context/CatalogContext';
 import { COMPANY_NAME } from '../../constants/branding';
 
-const CATEGORIES = ['medicine', 'healthcare', 'vitamins', 'personal-care', 'devices'];
+const CATEGORIES = ['cough-syrups', 'antibiotics', 'gi-care', 'vitamins-minerals', 'joints-mobility'];
 
 const empty = {
   name: '',
   description: '',
   price: '',
   costPrice: '',
-  category: 'medicine',
+  category: 'cough-syrups',
   stock: '',
   sku: '',
   isActive: true,
@@ -40,7 +40,7 @@ export default function AdminProductForm() {
           description: data.description || '',
           price: String(data.price ?? ''),
           costPrice: String(data.costPrice ?? '0'),
-          category: data.category || 'medicine',
+          category: data.category || 'cough-syrups',
           stock: String(data.stock ?? ''),
           sku: data.sku || '',
           isActive: !!data.isActive,

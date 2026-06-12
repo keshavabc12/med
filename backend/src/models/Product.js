@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['medicine', 'healthcare', 'vitamins', 'personal-care', 'devices'],
+      enum: ['cough-syrups', 'antibiotics', 'gi-care', 'vitamins-minerals', 'joints-mobility'],
     },
     /** Public URL path e.g. /uploads/filename.jpg */
     image: { type: String, default: '' },
