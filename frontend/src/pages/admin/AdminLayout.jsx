@@ -22,7 +22,7 @@ export default function AdminLayout() {
         <aside className="hidden w-56 shrink-0 border-r border-slate-800 bg-slate-900 p-4 md:block">
           <div className="flex items-center gap-2.5 mb-4">
             <span className="flex h-10 w-auto shrink-0 items-center justify-center rounded-lg border border-slate-700 overflow-hidden bg-white">
-              <img src="/logo.jpg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
+              <img src="/logo.jpeg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
             </span>
             <div className="flex flex-col">
               <span className="font-display text-sm font-bold text-white leading-none">{COMPANY_NAME}</span>
@@ -55,7 +55,7 @@ export default function AdminLayout() {
           <header className="flex items-center justify-between border-b border-slate-800 bg-slate-900 px-4 py-3 md:hidden">
             <div className="flex items-center gap-2 min-w-0">
               <span className="flex h-8 w-auto shrink-0 items-center justify-center rounded border border-slate-700 overflow-hidden bg-white">
-                <img src="/logo.jpg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
+              <img src="/logo.jpeg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
               </span>
               <div className="flex flex-col min-w-0">
                 <span className="font-display text-sm font-bold text-white leading-none truncate">{COMPANY_NAME}</span>

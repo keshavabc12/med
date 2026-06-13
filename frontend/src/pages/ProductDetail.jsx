@@ -48,7 +48,7 @@ export default function ProductDetail() {
   return (
     <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
       <div className="flex justify-center items-center rounded-3xl border border-slate-200/90 bg-white shadow-xl ring-1 ring-slate-100">
-                <img src={mediaUrl(product.image)} alt="" className="w-full h-auto object-contain" />
+                <img src={mediaUrl(product.image)} alt="" onError={(e) => { e.currentTarget.src = '/placeholder-product.svg'; }} className="w-full h-auto object-contain" />
       </div>
       <div className="flex flex-col">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">{product.category}</p>

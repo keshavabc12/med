@@ -127,6 +127,7 @@ export default function Products() {
                 <img
                   src={mediaUrl(p.image)}
                   alt=""
+                  onError={(e) => { e.currentTarget.src = '/placeholder-product.svg'; }}
                   className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
                 />
               </div>

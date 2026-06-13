@@ -65,8 +65,19 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Uploaded product images
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+// Uploaded product images — served with a 1-day cache that must revalidate.
+// This prevents browsers caching 404s for missing images between server restarts.
+app.use(
+  '/uploads',
+  express.static(path.join(__dirname, '..', 'uploads'), {
+    maxAge: '1d',
+    etag: true,
+    lastModified: true,
+    setHeaders(res) {
+      res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate');
+    },
+  })
+);
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, service: 'pharma-api' });

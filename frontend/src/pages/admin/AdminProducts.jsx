@@ -92,7 +92,7 @@ export default function AdminProducts() {
                 <tr key={p._id} className="align-top">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <img src={mediaUrl(p.image)} alt="" className="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-700" />
+                      <img src={mediaUrl(p.image)} alt="" onError={(e) => { e.currentTarget.src = '/placeholder-product.svg'; }} className="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-700" />
                       <span className="max-w-[160px] font-medium text-slate-100">{p.name}</span>
                     </div>
                   </td>

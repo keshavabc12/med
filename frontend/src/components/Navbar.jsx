@@ -23,7 +23,6 @@ export default function Navbar() {
           </span>
           <div className="flex flex-col min-w-0">
             <span className="font-display text-sm sm:text-[1.05rem] font-bold text-brand-900 leading-none truncate">{COMPANY_NAME}</span>
-            <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-teal-600/80 uppercase mt-0.5 truncate">Wellness & Care</span>
           </div>
         </Link>
 

@@ -112,7 +112,7 @@ export default function Home() {
               className="flex gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-md transition hover:border-brand-300 hover:shadow-lg"
             >
               <div className="w-24 h-24 shrink-0 sm:w-28 sm:h-28 flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
-                <img src={mediaUrl(p.image)} alt="" className="max-w-full max-h-full object-contain mx-auto mix-blend-multiply" />
+                <img src={mediaUrl(p.image)} alt="" onError={(e) => { e.currentTarget.src = '/placeholder-product.svg'; }} className="max-w-full max-h-full object-contain mx-auto mix-blend-multiply" />
               </div>
               <div className="min-w-0 flex-1 flex flex-col">
                 <p className="line-clamp-2 font-semibold text-slate-900">{p.name}</p>
