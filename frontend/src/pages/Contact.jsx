@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { COMPANY_NAME } from '../constants/branding';
-import { FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
+import { FiMapPin, FiPhone, FiMail, FiCheckCircle } from 'react-icons/fi';
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     const name = e.target.cname.value;
     const email = e.target.cemail.value;
     const msg = e.target.cmsg.value;
@@ -18,15 +23,19 @@ export default function Contact() {
         body: JSON.stringify({ name, email, message: msg }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         setSent(true);
         e.target.reset();
       } else {
-        alert('Failed to send message. Please try again.');
+        setError(data.error || 'Failed to send message. Please try again.');
       }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      alert('Error connecting to the server. Please check if the backend is running.');
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setError('Unable to connect to the server. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,11 +68,31 @@ export default function Contact() {
           </p>
 
           {sent ? (
-            <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-sm font-medium text-emerald-900 animate-fade-in">
-              Thanks for reaching out! Your message has been sent to our team, and we will get back to you shortly.
-            </p>
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 animate-fade-in">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="rounded-full bg-emerald-100 p-2">
+                  <FiCheckCircle className="h-6 w-6 text-emerald-600" />
+                </div>
+                <h3 className="text-lg font-bold text-emerald-900">Message Sent Successfully!</h3>
+              </div>
+              <p className="text-sm text-emerald-800 leading-relaxed">
+                Thank you for reaching out! Your message has been delivered to our team. We will review it and get back to you as soon as possible.
+              </p>
+              <button
+                onClick={() => { setSent(false); setError(''); }}
+                className="mt-4 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors shadow-sm"
+              >
+                Send Another Message
+              </button>
+            </div>
           ) : (
             <form onSubmit={onSubmit} className="space-y-5">
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 font-medium animate-fade-in">
+                  {error}
+                </div>
+              )}
+
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label className="text-sm font-semibold text-brand-900" htmlFor="cname">
@@ -72,8 +101,9 @@ export default function Contact() {
                   <input
                     id="cname"
                     required
+                    disabled={loading}
                     placeholder="Enter your name"
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 transition-all shadow-inner"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 transition-all shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div>
@@ -84,8 +114,9 @@ export default function Contact() {
                     id="cemail"
                     type="email"
                     required
+                    disabled={loading}
                     placeholder="Enter your email"
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 transition-all shadow-inner"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 transition-all shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -96,16 +127,28 @@ export default function Contact() {
                 <textarea
                   id="cmsg"
                   required
+                  disabled={loading}
                   rows={4}
                   placeholder="How can we help you?"
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 transition-all shadow-inner"
+                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 transition-all shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full rounded-2xl bg-gradient-to-r from-brand-600 to-brand-900 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-700/20 hover:from-brand-500 hover:to-brand-800 transition-all duration-300 transform active:scale-[0.98]"
+                disabled={loading}
+                className="w-full rounded-2xl bg-gradient-to-r from-brand-600 to-brand-900 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-700/20 hover:from-brand-500 hover:to-brand-800 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100 flex items-center justify-center gap-2"
               >
-                Send Message
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  'Send Message'
+                )}
               </button>
             </form>
           )}
