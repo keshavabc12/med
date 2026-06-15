@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 // import { useAuth } from '../context/AuthContext'; // auth removed
 // import { useCart } from '../context/CartContext';
@@ -10,6 +11,7 @@ const linkClass = ({ isActive }) =>
   }`;
 
 export default function Navbar() {
+  const [logoSrc, setLogoSrc] = useState('/logo.jpeg');
   // Auth removed
   // useCart removed
 
@@ -17,10 +19,20 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-teal-900/10 bg-white/85 shadow-sm shadow-teal-900/5 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:gap-4">
         <Link to="/" className="group flex min-w-0 items-center gap-2 sm:gap-3">
-          <span className="flex h-10 sm:h-12 w-auto shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 overflow-hidden shadow-sm transition group-hover:border-brand-400 bg-white">
-            {/* Make sure to save your image as 'logo-full.jpeg' inside frontend/public */}
-            <img src="/logo.jpeg" alt={COMPANY_NAME} className="h-full w-auto object-contain bg-white" />
-          </span>
+          {logoSrc && (
+            <span className="flex h-10 sm:h-12 w-auto shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 overflow-hidden shadow-sm transition group-hover:border-brand-400 bg-white">
+              <img 
+                src={logoSrc} 
+                alt={COMPANY_NAME} 
+                className="h-full w-auto object-contain bg-white" 
+                onError={() => {
+                  if (logoSrc === '/logo.jpeg') setLogoSrc('/logo-full.jpeg');
+                  else if (logoSrc === '/logo-full.jpeg') setLogoSrc('/logo1.jpg');
+                  else setLogoSrc('');
+                }}
+              />
+            </span>
+          )}
           <div className="flex flex-col min-w-0">
             <span className="font-display text-sm sm:text-[1.05rem] font-bold text-brand-900 leading-none truncate">{COMPANY_NAME}</span>
           </div>

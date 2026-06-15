@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const Product = require('../models/Product');
+const { uploadBuffer } = require('../utils/cloudinary');
 
 /** GET /api/products — search, category filter, pagination */
 exports.list = async (req, res) => {
@@ -68,10 +69,18 @@ exports.create = async (req, res) => {
       return res.status(400).json({ message: 'name, category, and valid price are required' });
     }
     if (req.files?.image?.[0]) {
-      body.image = `/uploads/${req.files.image[0].filename}`;
+      const imgRes = await uploadBuffer(req.files.image[0].buffer, {
+        folder: 'pharma_products',
+        resource_type: 'image',
+      });
+      body.image = imgRes.secure_url;
     }
     if (req.files?.document?.[0]) {
-      body.documentUrl = `/uploads/${req.files.document[0].filename}`;
+      const docRes = await uploadBuffer(req.files.document[0].buffer, {
+        folder: 'pharma_documents',
+        resource_type: 'raw',
+      });
+      body.documentUrl = docRes.secure_url;
     }
     const product = await Product.create(body);
     res.status(201).json(product);
@@ -95,10 +104,18 @@ exports.update = async (req, res) => {
       updates.isActive = updates.isActive === true || updates.isActive === 'true';
     }
     if (req.files?.image?.[0]) {
-      updates.image = `/uploads/${req.files.image[0].filename}`;
+      const imgRes = await uploadBuffer(req.files.image[0].buffer, {
+        folder: 'pharma_products',
+        resource_type: 'image',
+      });
+      updates.image = imgRes.secure_url;
     }
     if (req.files?.document?.[0]) {
-      updates.documentUrl = `/uploads/${req.files.document[0].filename}`;
+      const docRes = await uploadBuffer(req.files.document[0].buffer, {
+        folder: 'pharma_documents',
+        resource_type: 'raw',
+      });
+      updates.documentUrl = docRes.secure_url;
     }
     const product = await Product.findByIdAndUpdate(req.params.id, updates, {
       new: true,

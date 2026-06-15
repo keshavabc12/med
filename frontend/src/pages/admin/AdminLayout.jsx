@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { COMPANY_NAME } from '../../constants/branding';
@@ -8,6 +9,7 @@ const navCls = ({ isActive }) =>
   }`;
 
 export default function AdminLayout() {
+  const [logoSrc, setLogoSrc] = useState('/logo.jpeg');
   const { admin, logout } = useAdminAuth();
   const navigate = useNavigate();
 
@@ -21,9 +23,20 @@ export default function AdminLayout() {
       <div className="flex min-h-screen">
         <aside className="hidden w-56 shrink-0 border-r border-slate-800 bg-slate-900 p-4 md:block">
           <div className="flex items-center gap-2.5 mb-4">
-            <span className="flex h-10 w-auto shrink-0 items-center justify-center rounded-lg border border-slate-700 overflow-hidden bg-white">
-              <img src="/logo.jpeg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
-            </span>
+            {logoSrc && (
+              <span className="flex h-10 w-auto shrink-0 items-center justify-center rounded-lg border border-slate-700 overflow-hidden bg-white">
+                <img 
+                  src={logoSrc} 
+                  alt={COMPANY_NAME} 
+                  className="h-full w-auto object-contain" 
+                  onError={() => {
+                    if (logoSrc === '/logo.jpeg') setLogoSrc('/logo-full.jpeg');
+                    else if (logoSrc === '/logo-full.jpeg') setLogoSrc('/logo1.jpg');
+                    else setLogoSrc('');
+                  }}
+                />
+              </span>
+            )}
             <div className="flex flex-col">
               <span className="font-display text-sm font-bold text-white leading-none">{COMPANY_NAME}</span>
 
@@ -54,9 +67,20 @@ export default function AdminLayout() {
         <div className="flex-1">
           <header className="flex items-center justify-between border-b border-slate-800 bg-slate-900 px-4 py-3 md:hidden">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="flex h-8 w-auto shrink-0 items-center justify-center rounded border border-slate-700 overflow-hidden bg-white">
-              <img src="/logo.jpeg" alt={COMPANY_NAME} className="h-full w-auto object-contain" />
-              </span>
+              {logoSrc && (
+                <span className="flex h-8 w-auto shrink-0 items-center justify-center rounded border border-slate-700 overflow-hidden bg-white">
+                  <img 
+                    src={logoSrc} 
+                    alt={COMPANY_NAME} 
+                    className="h-full w-auto object-contain" 
+                    onError={() => {
+                      if (logoSrc === '/logo.jpeg') setLogoSrc('/logo-full.jpeg');
+                      else if (logoSrc === '/logo-full.jpeg') setLogoSrc('/logo1.jpg');
+                      else setLogoSrc('');
+                    }}
+                  />
+                </span>
+              )}
               <div className="flex flex-col min-w-0">
                 <span className="font-display text-sm font-bold text-white leading-none truncate">{COMPANY_NAME}</span>
 

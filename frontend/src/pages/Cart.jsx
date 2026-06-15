@@ -33,7 +33,7 @@ export default function Cart() {
             key={line.productId}
             className="flex flex-col gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-md sm:flex-row sm:items-center"
           >
-            <img src={mediaUrl(line.image)} alt="" className="h-24 w-24 rounded-xl object-cover ring-1 ring-slate-100" />
+            <img src={mediaUrl(line.image)} alt="" onError={(e) => { e.currentTarget.src = '/placeholder-product.svg'; }} className="h-24 w-24 rounded-xl object-cover ring-1 ring-slate-100" />
             <div className="min-w-0 flex-1">
               <Link
                 to={`/products/${line.productId}`}
