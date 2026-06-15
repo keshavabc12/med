@@ -39,10 +39,18 @@ router.post('/', async (req, res) => {
     // Configure the Gmail transporter using App Password
     const transporter = nodemailer.createTransport({
       service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: emailUser,
         pass: emailPass,
       },
+      connectionTimeout: 15000, // 15 seconds timeout
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
+      debug: true,
+      logger: true,
     });
 
     const mailOptions = {
