@@ -26,7 +26,7 @@ export default function AdminLayout() {
             </span>
             <div className="flex flex-col">
               <span className="font-display text-sm font-bold text-white leading-none">{COMPANY_NAME}</span>
-              <span className="text-[9px] font-bold tracking-widest text-teal-400/90 uppercase mt-0.5">Wellness & Care</span>
+
             </div>
           </div>
           <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500">Staff console</p>
@@ -59,7 +59,7 @@ export default function AdminLayout() {
               </span>
               <div className="flex flex-col min-w-0">
                 <span className="font-display text-sm font-bold text-white leading-none truncate">{COMPANY_NAME}</span>
-                <span className="text-[8px] font-bold tracking-widest text-teal-400/90 uppercase mt-0.5 truncate">Wellness & Care</span>
+
               </div>
             </div>
             <button type="button" onClick={handleLogout} className="text-sm shrink-0 text-brand-300 ml-2">

@@ -17,8 +17,11 @@ import AdminProductForm from './pages/admin/AdminProductForm';
 import AdminStock from './pages/admin/AdminStock';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminUsers from './pages/admin/AdminUsers';
+import useVisitorTracking from './hooks/useVisitorTracking';
 
-export default function App() {
+function AppContent() {
+  useVisitorTracking();
+
   return (
     <Routes>
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -51,4 +54,8 @@ export default function App() {
       </Route>
     </Routes>
   );
+}
+
+export default function App() {
+  return <AppContent />;
 }

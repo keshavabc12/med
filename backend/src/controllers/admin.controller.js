@@ -22,9 +22,9 @@ exports.dashboard = async (_req, res) => {
 
     const totalRevenue = totalRevenueAgg[0]?.sum || 0;
 
-    // Real‑time visitors (last 5 minutes)
+    // Real‑time visitors (active in the last 5 minutes)
     const realTimeVisitors = await Visit.countDocuments({
-      createdAt: { $gte: new Date(Date.now() - 5 * 60 * 1000) },
+      lastActivity: { $gte: new Date(Date.now() - 5 * 60 * 1000) },
     });
 
     // Visitor series aggregations
@@ -75,10 +75,10 @@ const thisMonthVisitors = await Visit.countDocuments({ createdAt: { $gte: startO
       { $sort: { label: 1 } },
     ]);
 
-      // Real-time visitors per minute for last 30 minutes
+      // Real-time visitors per minute for last 30 minutes (based on lastActivity)
       const realTimeSeries = await Visit.aggregate([
-        { $match: { createdAt: { $gte: new Date(now.getTime() - 30 * 60 * 1000) } } },
-        { $group: { _id: { $dateToString: { format: "%H:%M", date: "$createdAt" } }, visitors: { $sum: 1 } } },
+        { $match: { lastActivity: { $gte: new Date(now.getTime() - 30 * 60 * 1000) } } },
+        { $group: { _id: { $dateToString: { format: "%H:%M", date: "$lastActivity" } }, visitors: { $sum: 1 } } },
         { $project: { label: '$_id', visitors: 1, _id: 0 } },
         { $sort: { label: 1 } },
       ]);

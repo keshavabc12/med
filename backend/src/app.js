@@ -7,6 +7,7 @@ const productRoutes = require('./routes/product.routes');
 const orderRoutes = require('./routes/order.routes');
 const contactRoutes = require('./routes/contact.routes');
 const adminRoutes = require('./routes/admin.routes');
+const visitorRoutes = require('./routes/visitor.routes');
 
 const app = express();
 
@@ -88,6 +89,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/track', visitorRoutes);
 
 // Serve frontend static files in production
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
