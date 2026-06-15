@@ -1,5 +1,6 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const https = require('https');
 
 const router = express.Router();
 
@@ -51,26 +52,44 @@ router.post('/', async (req, res) => {
     // 1. If Brevo API key is available, use Brevo's HTTP API (highly recommended for Render free tier)
     if (brevoApiKey) {
       console.log('Sending email via Brevo HTTP API...');
-      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      
+      const payload = JSON.stringify({
+        sender: { name: 'Cherishya Pharma Website', email: emailUser },
+        to: [{ email: companyEmail, name: 'Cherishya Pharma' }],
+        replyTo: { email: email, name: name },
+        subject: `Website Enquiry from ${name}`,
+        htmlContent: emailHtml,
+      });
+
+      const options = {
+        hostname: 'api.brevo.com',
+        path: '/v3/smtp/email',
         method: 'POST',
         headers: {
           'accept': 'application/json',
           'api-key': brevoApiKey,
           'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          sender: { name: 'Cherishya Pharma Website', email: emailUser },
-          to: [{ email: companyEmail, name: 'Cherishya Pharma' }],
-          replyTo: { email: email, name: name },
-          subject: `Website Enquiry from ${name}`,
-          htmlContent: emailHtml,
-        }),
-      });
+          'content-length': Buffer.byteLength(payload)
+        }
+      };
 
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Brevo API responded with status ${response.status}: ${errText}`);
-      }
+      await new Promise((resolve, reject) => {
+        const reqHttp = https.request(options, (resHttp) => {
+          let data = '';
+          resHttp.on('data', (chunk) => { data += chunk; });
+          resHttp.on('end', () => {
+            if (resHttp.statusCode >= 200 && resHttp.statusCode < 300) {
+              resolve(data);
+            } else {
+              reject(new Error(`Brevo API error ${resHttp.statusCode}: ${data}`));
+            }
+          });
+        });
+
+        reqHttp.on('error', (e) => reject(e));
+        reqHttp.write(payload);
+        reqHttp.end();
+      });
 
       return res.status(200).json({ success: true, message: 'Email sent successfully via Brevo!' });
     }
@@ -125,7 +144,7 @@ router.post('/', async (req, res) => {
   } catch (error) {
     console.error('Email send error:', error);
     res.status(500).json({
-      error: 'Failed to send your message. Please try again later.',
+      error: error.message || 'Failed to send your message. Please try again later.',
     });
   }
 });
