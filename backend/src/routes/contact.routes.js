@@ -17,9 +17,9 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Please provide a valid email address.' });
     }
 
-    const emailUser = process.env.EMAIL_USER || 'cherishyapharma@gmail.com';
-    const emailPass = process.env.EMAIL_PASS || '';
-    const companyEmail = process.env.COMPANY_EMAIL || 'cherishyapharma@gmail.com';
+    const emailUser = (process.env.EMAIL_USER || 'cherishyapharma@gmail.com').trim();
+    const emailPass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+    const companyEmail = (process.env.COMPANY_EMAIL || 'cherishyapharma@gmail.com').trim();
 
     // If no app password is configured, simulate the send for dev purposes
     if (!emailPass) {
@@ -38,13 +38,15 @@ router.post('/', async (req, res) => {
 
     // Configure the Gmail transporter using App Password
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
       host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false, // false for 587 (STARTTLS)
       auth: {
         user: emailUser,
         pass: emailPass,
+      },
+      tls: {
+        rejectUnauthorized: false, // avoids issues with self-signed certificates or cloud firewalls
       },
       connectionTimeout: 15000, // 15 seconds timeout
       greetingTimeout: 15000,
