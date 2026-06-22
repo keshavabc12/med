@@ -114,10 +114,10 @@ async function seedDatabase() {
     admin = await User.create({
       name: 'Pharma Admin',
       email: adminEmail,
-      password: 'Admin123!',
+      password: 'CheriShya@030721',
       role: 'admin',
     });
-    console.log('Seed: created admin', adminEmail, '/ Admin123!');
+    console.log('Seed: created admin', adminEmail, '/ CheriShya@030721');
   }
 
   const demoEmail = 'customer@demo.com';

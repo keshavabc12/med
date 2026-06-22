@@ -11,8 +11,8 @@ export default function Footer() {
 
   const handleSecuritySubmit = (e) => {
     e.preventDefault();
-    // The security key is currently hardcoded as 'admin123'
-    if (securityKey === 'admin123') {
+    // The security key is currently hardcoded as 'CheriShya@030721'
+    if (securityKey === 'CheriShya@030721') {
       setShowSecurityPrompt(false);
       setSecurityKey('');
       setError('');
@@ -103,7 +103,7 @@ export default function Footer() {
               <a href="https://wa.me/918073353836" target="_blank" rel="noopener noreferrer" className="text-teal-200 hover:text-white transition hover:scale-110" aria-label="WhatsApp">
                 <FaWhatsapp className="w-5 h-5" aria-label="WhatsApp" />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-teal-200 hover:text-white transition hover:scale-110" aria-label="Instagram">
+              <a href="https://www.instagram.com/cherishyapharma?igsh=dndtdngzMDh0eGRq" target="_blank" rel="noopener noreferrer" className="text-teal-200 hover:text-white transition hover:scale-110" aria-label="Instagram">
                 <FaInstagram className="w-5 h-5" aria-label="Instagram" />
               </a>
             </div>
