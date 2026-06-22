@@ -11,8 +11,8 @@ export default function Footer() {
 
   const handleSecuritySubmit = (e) => {
     e.preventDefault();
-    // The security key is currently hardcoded as 'CheriShya@030721'
-    if (securityKey === 'CheriShya@030721') {
+    // The security key is currently hardcoded as 'admin123'
+    if (securityKey === 'admin123') {
       setShowSecurityPrompt(false);
       setSecurityKey('');
       setError('');
