@@ -1,35 +1,58 @@
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const { resolveMongoUri, stopMongoMemory } = require('../src/config/resolveMongoUri');
 const User = require('../src/models/User');
 
-async function updateAdminPassword() {
+async function updateAdmin() {
   try {
     const uri = await resolveMongoUri();
     process.env.MONGO_URI = uri;
     await mongoose.connect(uri);
     console.log('✅ Connected to MongoDB');
 
-    // Find by role in case email was different before
-    const admin = await User.findOne({ role: 'admin' }).select('+password');
+    // Find any admin user regardless of current email
+    const admin = await User.findOne({ role: 'admin' });
 
-    if (admin) {
-      console.log(`📧 Found admin: ${admin.email} — updating email & password...`);
-      admin.email = 'infocherishya@gmail.com';
-      admin.password = 'CheriShya@030721';
-      await admin.save();
-      console.log('✅ Admin email updated to: infocherishya@gmail.com');
-      console.log('✅ Admin password updated to: CheriShya@030721');
-    } else {
-      // No admin exists at all — create one fresh
+    if (!admin) {
+      // No admin found — create one fresh
       console.log('⚠️  No admin found — creating new admin account...');
-      await User.create({
+      const hashed = await bcrypt.hash('CheriShya@030721', 10);
+      await User.collection.insertOne({
         name: 'Pharma Admin',
         email: 'infocherishya@gmail.com',
-        password: 'CheriShya@030721',
+        password: hashed,
         role: 'admin',
+        phone: '',
+        address: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
       console.log('✅ Admin created: infocherishya@gmail.com / CheriShya@030721');
+    } else {
+      console.log(`📧 Found admin with email: ${admin.email}`);
+
+      // Hash the new password manually
+      const hashed = await bcrypt.hash('CheriShya@030721', 10);
+
+      // Use direct MongoDB update to bypass any Mongoose quirks
+      const result = await User.collection.updateOne(
+        { _id: admin._id },
+        {
+          $set: {
+            email: 'infocherishya@gmail.com',
+            password: hashed,
+            updatedAt: new Date(),
+          },
+        }
+      );
+
+      if (result.modifiedCount === 1) {
+        console.log('✅ Admin email updated to: infocherishya@gmail.com');
+        console.log('✅ Admin password updated to: CheriShya@030721');
+      } else {
+        console.log('⚠️  No changes were made (already up to date?)');
+      }
     }
 
     await mongoose.disconnect();
@@ -42,4 +65,4 @@ async function updateAdminPassword() {
   }
 }
 
-updateAdminPassword();
+updateAdmin();
