@@ -108,7 +108,7 @@ const SAMPLE_PRODUCTS = [
  * Inserts demo admin, customer, products, and sample orders if missing.
  */
 async function seedDatabase() {
-  const adminEmail = 'admin@pharma.local';
+  const adminEmail = 'infocherishya@gmail.com';
   let admin = await User.findOne({ email: adminEmail });
   if (!admin) {
     admin = await User.create({

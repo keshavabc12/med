@@ -10,22 +10,33 @@ async function updateAdminPassword() {
     await mongoose.connect(uri);
     console.log('✅ Connected to MongoDB');
 
-    const adminEmail = 'admin@pharma.local';
-    const admin = await User.findOne({ email: adminEmail });
+    // Find by role in case email was different before
+    const admin = await User.findOne({ role: 'admin' }).select('+password');
 
     if (admin) {
+      console.log(`📧 Found admin: ${admin.email} — updating email & password...`);
+      admin.email = 'infocherishya@gmail.com';
       admin.password = 'CheriShya@030721';
       await admin.save();
-      console.log('✅ Admin password updated to CheriShya@030721');
+      console.log('✅ Admin email updated to: infocherishya@gmail.com');
+      console.log('✅ Admin password updated to: CheriShya@030721');
     } else {
-      console.log('❌ Admin user not found');
+      // No admin exists at all — create one fresh
+      console.log('⚠️  No admin found — creating new admin account...');
+      await User.create({
+        name: 'Pharma Admin',
+        email: 'infocherishya@gmail.com',
+        password: 'CheriShya@030721',
+        role: 'admin',
+      });
+      console.log('✅ Admin created: infocherishya@gmail.com / CheriShya@030721');
     }
 
     await mongoose.disconnect();
     await stopMongoMemory();
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error:', error);
+    console.error('❌ Error:', error.message);
     await stopMongoMemory();
     process.exit(1);
   }
