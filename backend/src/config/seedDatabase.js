@@ -112,12 +112,12 @@ async function seedDatabase() {
   let admin = await User.findOne({ email: adminEmail });
   if (!admin) {
     admin = await User.create({
-      name: 'Pharma Admin',
+      name: 'Admin',
       email: adminEmail,
-      password: 'CheriShya@030721',
+      password: 'CheriShya@0307',
       role: 'admin',
     });
-    console.log('Seed: created admin', adminEmail, '/ CheriShya@030721');
+    console.log('Seed: created admin', adminEmail, '/ CheriShya@0307');
   }
 
   const demoEmail = 'customer@demo.com';

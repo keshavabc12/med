@@ -41,7 +41,7 @@ React storefront + Express REST API + MongoDB + JWT auth (customers and separate
 
    Demo accounts:
 
-   - Admin: `admin@pharma.local` / `Admin123!`
+   - Admin: `infocherishya@gmail.com` / `CheriShya@0307`
    - Customer: `customer@demo.com` / `User123!`
 
 3. API default: [http://localhost:5000](http://localhost:5000) — `GET /api/health`.
@@ -122,5 +122,5 @@ Deploy frontend and backend as two separate Vercel projects.
    - Redeploy frontend after setting env.
 
 3. **Admin login**
-   - Use `admin@pharma.local` / `Admin123!` (seeded when `AUTO_SEED=true`).
+   - Use `infocherishya@gmail.com` / `CheriShya@0307` (seeded when `AUTO_SEED=true`).
    - If you disable seeding later, keep the created admin in MongoDB.
