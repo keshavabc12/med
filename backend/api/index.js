@@ -19,7 +19,7 @@ async function initIfNeeded() {
     process.env.MONGO_URI = uri;
     await connectDB();
 
-    if (process.env.AUTO_SEED === 'true' || process.env.AUTO_SEED === '1') {
+    if (process.env.AUTO_SEED !== 'false') {
       await seedDatabase();
     }
     dbReady = true;

@@ -12,6 +12,7 @@ const SAMPLE_PRODUCTS = [
     category: 'cough-syrups',
     stock: 120,
     sku: 'CS-BEN-100',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -23,6 +24,7 @@ const SAMPLE_PRODUCTS = [
     category: 'antibiotics',
     stock: 200,
     sku: 'AB-AZI-500',
+    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -34,6 +36,7 @@ const SAMPLE_PRODUCTS = [
     category: 'antibiotics',
     stock: 150,
     sku: 'AB-AMX-250',
+    image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -45,6 +48,7 @@ const SAMPLE_PRODUCTS = [
     category: 'gi-care',
     stock: 180,
     sku: 'GI-PAN-40',
+    image: 'https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -56,6 +60,7 @@ const SAMPLE_PRODUCTS = [
     category: 'gi-care',
     stock: 300,
     sku: 'GI-ORS-10',
+    image: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -67,6 +72,7 @@ const SAMPLE_PRODUCTS = [
     category: 'vitamins-minerals',
     stock: 90,
     sku: 'VM-D3K2-60',
+    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -78,6 +84,7 @@ const SAMPLE_PRODUCTS = [
     category: 'vitamins-minerals',
     stock: 75,
     sku: 'VM-CMZ-60',
+    image: 'https://images.unsplash.com/photo-1550572017-4fcdbb59cc32?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -89,6 +96,7 @@ const SAMPLE_PRODUCTS = [
     category: 'joints-mobility',
     stock: 60,
     sku: 'JM-GC-60',
+    image: 'https://images.unsplash.com/photo-1577401239170-897942555fb3?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
   {
@@ -100,6 +108,7 @@ const SAMPLE_PRODUCTS = [
     category: 'joints-mobility',
     stock: 100,
     sku: 'JM-DCF-30G',
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&auto=format&fit=crop&q=80',
     isActive: true,
   },
 ];
@@ -137,6 +146,28 @@ async function seedDatabase() {
   if (count === 0) {
     await Product.insertMany(SAMPLE_PRODUCTS);
     console.log('Seed: inserted products', SAMPLE_PRODUCTS.length);
+  } else {
+    // Backfill image URLs for existing products that don't have images
+    for (const sample of SAMPLE_PRODUCTS) {
+      await Product.updateMany(
+        {
+          $and: [
+            {
+              $or: [{ sku: sample.sku }, { name: sample.name }],
+            },
+            {
+              $or: [
+                { image: { $exists: false } },
+                { image: null },
+                { image: '' },
+                { image: '/placeholder-product.svg' },
+              ],
+            },
+          ],
+        },
+        { $set: { image: sample.image } }
+      );
+    }
   }
 
   const orderCount = await Order.countDocuments();
